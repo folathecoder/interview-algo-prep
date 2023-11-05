@@ -43,20 +43,25 @@ const bruteTwoSum = (nums, target) => {
 // Use an Hash Map
 // Time Complexity: O(N)
 
-const twoSum = (nums, target) => {
-  const storage = {}; // Initialize an empty object to store potential complements.
+function twoSum(nums, target) {
+  // Declare an hashmap to store the nums values in a dictionary format
+  let hashMap = {};
 
-  // Iterate over the array, using the index and num.
-  for (let [index, num] of nums.entries()) {
-    if (storage[num] !== undefined) {
-      // If the current num is a key in storage, return the stored index and current index.
-      return [storage[num], index];
-    }
-    // Store the index at the key of 'target - num'.
-    // This is because if 'target - num' appears later, we know its index will add up with the current index to equal the target.
-    storage[target - num] = index;
+  // To extract and stoare each value in the nums array into the hashMap
+  for (let i = 0; i < nums.length; i++) {
+    hashMap[nums[i]] = i;
   }
-};
+
+  // To check if the remainder value that makes up for the addition to the target number is present in the hashmap
+  for (let i = 0; i < nums.length; i++) {
+    let remainderNum = target - nums[i];
+
+    // Check if the remainder value is present in the hashmap and not equal to the current loop index to avoid repetition
+    if (hashMap[remainderNum] && hashMap[remainderNum] !== i) {
+      return [i, hashMap[remainderNum]];
+    }
+  }
+}
 
 // Test Brute Force
 // console.log(bruteTwoSum([2, 7, 11, 15], 9)); // Output: [0, 1]
